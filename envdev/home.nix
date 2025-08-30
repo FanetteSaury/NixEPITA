@@ -35,6 +35,10 @@
     fd
     lazygit
     gcc
+    
+    # Window manager
+    i3
+    i3status
   ];
 
 
@@ -63,5 +67,15 @@
     enable = true;
     enableBashIntegration = true;
     nix-direnv.enable = true;
+  };
+
+  # i3 window manager - let Home Manager manage it
+  xsession.windowManager.i3 = {
+    enable = true;
+    config = {
+      startup = [
+        { command = "export PATH=$HOME/.nix-profile/bin:$PATH"; always = true; }
+      ];
+    };
   };
 }
