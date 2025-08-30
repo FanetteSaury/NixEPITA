@@ -11,7 +11,7 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, home-manager }:
-    flake-utils.lib.eachDefaultSystem (system:
+    (flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
       in
@@ -19,13 +19,13 @@
         # Development shell (preserved)
         devShells.default = import ./shell.nix { inherit pkgs; };
         devShell = import ./shell.nix { inherit pkgs; };
-
-        # Home Manager configuration
-        homeConfigurations = {
-          fanette = home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-            modules = [ ./home.nix ];
-          };
+      })) // {
+      # Home Manager configuration at root level
+      homeConfigurations = {
+        fanette = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ ./home.nix ];
         };
-      });
+      };
+    };
 }
