@@ -3,7 +3,9 @@
 {
   # Home Manager needs a bit of information about you and the paths it should manage
   home.username = builtins.getEnv "USER";
-  home.homeDirectory = builtins.getEnv "HOME";
+  home.homeDirectory = 
+    let homeDir = builtins.getEnv "HOME";
+    in if homeDir != "" then homeDir else "/home/${builtins.getEnv "USER"}";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
