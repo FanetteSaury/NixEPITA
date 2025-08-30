@@ -35,12 +35,6 @@
     gcc
   ];
 
-  # Git configuration
-  programs.git = {
-    enable = true;
-    userName = "fanette";
-    userEmail = "your-email@example.com"; # Change this to your email
-  };
 
   # Bash configuration with custom prompt
   programs.bash = {
